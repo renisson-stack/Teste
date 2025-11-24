@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Bloco de Notas</title>
+	</head>
+<body>
+  <header>
+    <img src="logo/logo-braskem.png" alt="Logo da Empresa X">
+  </header>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], textarea { width: 60%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h2>Formulário de Chamados Braskem</h2>
+
+    <div class="form-group">
+        <label for="titulo">Título do Arquivo (Nome do Arquivo):</label>
+        <input type="text" id="titulo" placeholder="Digite o título que será o nome do arquivo">
+    </div>
+
+	<div class="form-group">
+        <label for="conteudo">Dados do Solicitante:</label>
+        <textarea id="conteudo" rows="1" placeholder="informe o Nome do Usuário"></textarea>
+    </div>
+
+	<div class="form-group">
+        <label for="conteudo">Login:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite o Login do Usuário"></textarea>
+    </div>
+
+	<div class="form-group">
+        <label for="conteudo">Centro de custo:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite o centro de custo do Usuário"></textarea>
+    </div>
+
+	<div class="form-group">
+        <label for="conteudo">Unidade:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite a Unidade"></textarea>
+    </div>
+
+<div class="form-group">
+        <label for="conteudo">Departamento:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite o departamento"></textarea>
+    </div>
+
+<div class="form-group">
+        <label for="conteudo">Contato:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite o contato com DDD"></textarea>
+    </div>
+
+<div class="form-group">
+        <label for="conteudo">Email:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite o email Braskem"></textarea>
+    </div>
+
+<div class="form-group">
+        <label for="conteudo">Previsão para entrega:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite a data prevista para entrega"></textarea>
+    </div>
+
+<div class="form-group">
+        <label for="conteudo">Descrição:</label>
+        <textarea id="conteudo" rows="1" placeholder="Digite a descrição do usuário confome consta no chamado"></textarea>
+    </div>
+
+<div class="form-group">
+        <label for="conteudo">Dados do equipamento:</label>
+        <textarea id="conteudo" rows="1" placeholder="Informe o Selo/ SN e TEI"></textarea>
+    </div>
+
+
+    <button onclick="gerarEBaixar()">Gerar e Baixar Arquivo TXT</button>
+
+    <script>
+        function gerarEBaixar() {
+            // Obter os valores do formulário
+            const titulo = document.getElementById('titulo').value;
+            const conteudo = document.getElementById('conteudo').value;
+            
+            // Validar se o título e o conteúdo não estão vazios
+            if (!titulo || !conteudo) {
+                alert('Por favor, preencha o título e o conteúdo.');
+                return;
+            }
+
+            // Criar o conteúdo completo do arquivo (opcionalmente formatado)
+            const dadosParaSalvar = `Título: ${titulo}\n\nConteúdo:\n${conteudo}`;
+
+            // Criar um objeto Blob com o conteúdo
+            // type: 'text/plain' indica que é um arquivo de texto simples
+            const blob = new Blob([dadosParaSalvar], { type: 'text/plain' });
+
+            // Criar um URL temporário para o Blob
+            const url = URL.createObjectURL(blob);
+
+            // Criar um elemento âncora (link) para o download
+            const a = document.createElement('a');
+            a.href = url;
+            // Definir o nome do arquivo para download. Adiciona ".txt" se não tiver.
+            a.download = titulo.endsWith('.txt') ? titulo : `${titulo}.txt`; 
+
+            // Adicionar o elemento âncora ao corpo do documento (necessário para Firefox)
+            document.body.appendChild(a);
+            
+            // Simular um clique no link para iniciar o download
+            a.click();
+
+            // Limpar o URL temporário e remover o elemento âncora
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body>
+</html>
