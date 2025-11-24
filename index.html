@@ -1,124 +1,184 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Gerador de Bloco de Notas</title>
-	</head>
-<body>
-  <header>
-    <img src="logo-braskem.png" alt="Logo da Empresa X">
-  </header>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Dados</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input[type="text"], textarea { width: 60%; padding: 8px; box-sizing: border-box; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-container h1 {
+            margin: 0;
+            margin-right: 270px; /* Espaço entre o título e o logo */
+        }
+        .logo {
+            width: 200px; /* Ajuste o tamanho do logo conforme necessário */
+            height: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea {
+            width: 57%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Formulário de Chamados Braskem</h2>
-
-    <div class="form-group">
-        <label for="titulo">Título do Arquivo (Nome do Arquivo):</label>
-        <input type="text" id="titulo" placeholder="Digite o título que será o nome do arquivo">
+    <div class="header-container">
+        <h1 style="font-size: 27px;">Formulário para chamados</h1>
+        <!-- Substitua 'url_do_seu_logo.png' pelo caminho ou URL do seu logo -->
+        <img src="logo/logo-braskem.png" alt="Logo da Empresa" class="logo">
     </div>
+</header>
+<div class="form-group">
+    <label for="titulo">Título do Arquivo (Nome do Arquivo):</label>
+    <input type="text" id="titulo" placeholder="Digite o título que será o nome do arquivo">
+</div>
 
-	<div class="form-group">
-        <label for="conteudo">Dados do Solicitante:</label>
-        <textarea id="conteudo" rows="1" placeholder="informe o Nome do Usuário"></textarea>
-    </div>
-
-	<div class="form-group">
-        <label for="conteudo">Login:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite o Login do Usuário"></textarea>
-    </div>
-
-	<div class="form-group">
-        <label for="conteudo">Centro de custo:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite o centro de custo do Usuário"></textarea>
-    </div>
-
-	<div class="form-group">
-        <label for="conteudo">Unidade:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite a Unidade"></textarea>
-    </div>
+<h2 style="font-size: 20px;">Dados do Solicitante</h2>
 
 <div class="form-group">
-        <label for="conteudo">Departamento:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite o departamento"></textarea>
-    </div>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" placeholder="Informe o Nome do Usuário">
+</div>
 
 <div class="form-group">
-        <label for="conteudo">Contato:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite o contato com DDD"></textarea>
-    </div>
+    <label for="login">Login:</label>
+    <input type="text" id="login" placeholder="Digite o Login do Usuário">
+</div>
 
 <div class="form-group">
-        <label for="conteudo">Email:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite o email Braskem"></textarea>
-    </div>
+    <label for="centroCusto">Centro de custo:</label>
+    <input type="text" id="centroCusto" placeholder="Digite o centro de custo do Usuário">
+</div>
 
 <div class="form-group">
-        <label for="conteudo">Previsão para entrega:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite a data prevista para entrega"></textarea>
-    </div>
+    <label for="unidade">Unidade:</label>
+    <input type="text" id="unidade" placeholder="Digite a Unidade">
+</div>
 
 <div class="form-group">
-        <label for="conteudo">Descrição:</label>
-        <textarea id="conteudo" rows="1" placeholder="Digite a descrição do usuário confome consta no chamado"></textarea>
-    </div>
+    <label for="departamento">Departamento:</label>
+    <textarea id="departamento" rows="1" placeholder="Digite o departamento"></textarea>
+</div>
 
 <div class="form-group">
-        <label for="conteudo">Dados do equipamento:</label>
-        <textarea id="conteudo" rows="1" placeholder="Informe o Selo/ SN e TEI"></textarea>
-    </div>
+    <label for="contato">Contato:</label>
+    <textarea id="contato" rows="1" placeholder="Digite o contato com DDD"></textarea>
+</div>
+
+<div class="form-group">
+    <label for="email">Email:</label>
+    <textarea id="email" rows="1" placeholder="Digite o email Braskem"></textarea>
+</div>
+
+<div class="form-group">
+    <label for="previsao">Previsão para entrega:</label>
+    <textarea id="previsao" rows="1" placeholder="Digite a data prevista para entrega"></textarea>
+</div>
+
+<div class="form-group">
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" rows="1" placeholder="Digite a descrição do usuário conforme consta no chamado"></textarea>
+</div>
+
+<div class="form-group">
+    <label for="equipamento">Dados do equipamento:</label>
+    <textarea id="equipamento" rows="1" placeholder="Informe o Selo/ SN e TEI"></textarea>
+</div>
+
+<button onclick="gerarEBaixar()">Gerar e Baixar Arquivo TXT</button>
+
+<script>
+function gerarEBaixar() {
+    const titulo = document.getElementById('titulo').value;
+    const nome = document.getElementById('nome').value;
+    const login = document.getElementById('login').value;
+    const centroCusto = document.getElementById('centroCusto').value;
+    const unidade = document.getElementById('unidade').value;
+    const departamento = document.getElementById('departamento').value;
+    const contato = document.getElementById('contato').value;
+    const email = document.getElementById('email').value;
+    const previsao = document.getElementById('previsao').value;
+    const descricao = document.getElementById('descricao').value;
+    const equipamento = document.getElementById('equipamento').value;
+
+    if (!titulo) {
+        alert('Por favor, preencha o título.');
+        return;
+    }
+
+    const dadosParaSalvar = 
+`Título: ${titulo}
 
 
-    <button onclick="gerarEBaixar()">Gerar e Baixar Arquivo TXT</button>
+Nome: ${nome}
 
-    <script>
-        function gerarEBaixar() {
-            // Obter os valores do formulário
-            const titulo = document.getElementById('titulo').value;
-            const conteudo = document.getElementById('conteudo').value;
-            
-            // Validar se o título e o conteúdo não estão vazios
-            if (!titulo || !conteudo) {
-                alert('Por favor, preencha o título e o conteúdo.');
-                return;
-            }
 
-            // Criar o conteúdo completo do arquivo (opcionalmente formatado)
-            const dadosParaSalvar = `Título: ${titulo}\n\nConteúdo:\n${conteudo}`;
+Login: ${login}
 
-            // Criar um objeto Blob com o conteúdo
-            // type: 'text/plain' indica que é um arquivo de texto simples
-            const blob = new Blob([dadosParaSalvar], { type: 'text/plain' });
 
-            // Criar um URL temporário para o Blob
-            const url = URL.createObjectURL(blob);
+Centro de custo: ${centroCusto}
 
-            // Criar um elemento âncora (link) para o download
-            const a = document.createElement('a');
-            a.href = url;
-            // Definir o nome do arquivo para download. Adiciona ".txt" se não tiver.
-            a.download = titulo.endsWith('.txt') ? titulo : `${titulo}.txt`; 
 
-            // Adicionar o elemento âncora ao corpo do documento (necessário para Firefox)
-            document.body.appendChild(a);
-            
-            // Simular um clique no link para iniciar o download
-            a.click();
+Unidade: ${unidade}
 
-            // Limpar o URL temporário e remover o elemento âncora
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-    </script>
+
+Departamento: ${departamento}
+
+
+Contato: ${contato}
+
+
+Email: ${email}
+
+
+Previsão para entrega: ${previsao}
+
+
+Descrição: ${descricao}
+
+
+Dados do equipamento: ${equipamento}
+`;
+
+    const blob = new Blob([dadosParaSalvar], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = titulo.endsWith('.txt') ? titulo : `${titulo}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+</script>
 
 </body>
 </html>
-
