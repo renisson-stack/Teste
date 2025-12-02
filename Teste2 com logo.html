@@ -1,122 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Dados</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .header-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .header-container h1 {
-            margin: 0;
-            margin-right: 270px; /* Espaço entre o título e o logo */
-        }
-        .logo {
-            width: 200px; /* Ajuste o tamanho do logo conforme necessário */
-            height: auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"], textarea {
-            width: 57%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+<meta charset="UTF-8" />
+<title>Sistema de Chamados & Consulta Patrimônio</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+body { font-family: Arial, sans-serif; padding: 5px; max-width: 600px; margin: 0 auto; }
+button { padding: 6px 10px; margin: 3px; cursor: pointer; font-size: 13px; border-radius:4px; }
+#consultaPage, #formPage, #chamadosPage { display:none; }
+
+#salvarBtn { background:#007bff; color:white; }
+#Gerar { background:#28a745; color:white; }
+#Chamados { background:#fd7e14; color:white; }
+
+.card { background:#fff; border-radius:6px; padding:8px; margin-bottom:8px; box-shadow:0 3px 8px rgba(0,0,0,0.05); }
+
+input, textarea {
+ width:100%; padding:6px; border:1px solid #ccc; border-radius:5px;
+ box-sizing:border-box; margin-bottom:5px; font-size:13px;
+}
+
+textarea { height:60px; resize: vertical; }
+label { font-weight:600; margin-top:4px; margin-bottom:2px; display:block; font-size:13px; }
+.small { font-size:11px; color:#555; }
+</style>
 </head>
+
 <body>
 
-    <div class="header-container">
-        <h1 style="font-size: 29px;">Formulário para chamados</h1>
-        <!-- Substitua 'url_do_seu_logo.png' pelo caminho ou URL do seu logo -->
-        <img src="logo/logo-braskem.png" alt="Logo da Empresa" class="logo">
-    </div>
+<header><img src="logo/logo-braskem.png" style="height:70px;"></header>
 
-    <form id="dataForm">
-        <div class="form-group">
-            <label for="tituloArquivo">Título do Arquivo (para nome do arquivo):</label>
-            <input type="text" id="tituloArquivo" required>
-        </div>
-	<h2 style="font-size: 20px;">Dados do solicitante</h2>
-        <div class="form-group">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" required>
-        </div>
-        <div class="form-group">
-            <label for="email">E-mail:</label>
-            <input type="text" id="email" required>
-        </div>
-        <div class="form-group">
-            <label for="mensagem">Mensagem/Dados:</label>
-            <textarea id="mensagem" rows="5" required></textarea>
-        </div>
-        <button type="submit">Gerar Bloco de Notas e Salvar</button>
-    </form>
+<h2>Sistema de Chamados & Consulta Patrimônio</h2>
 
-    <script>
-        document.getElementById('dataForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Previne o envio padrão do formulário
+<!-- BOTÕES DE NAVEGAÇÃO -->
+<button onclick="abrirChamados()">FORMULÁRIO</button>
+<button onclick="abrirConsulta()">CONSULTAR PATRIMÔNIO</button>
+<button onclick="abrirChamadosSalvos()">CHAMADOS</button>
 
-            // Captura os valores dos campos
-            const tituloArquivo = document.getElementById('tituloArquivo').value;
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const mensagem = document.getElementById('mensagem').value;
+<br>
 
-            // Formata os dados para o bloco de notas (arquivo de texto)
-            const dadosFormatados = `
-Título do Arquivo: ${tituloArquivo}
----
-Nome: ${nome}
-E-mail: ${email}
-Mensagem:
-${mensagem}
-            `.trim();
+<!-- ===========================================================
+==================== 1) FORMULÁRIO ==============================
+=========================================================== -->
+<div id="formPage">
 
-            // Cria um Blob (objeto de dados binários) com o conteúdo e tipo de arquivo (texto simples)
-            const blob = new Blob([dadosFormatados], { type: 'text/plain;charset=utf-8' });
+<label>Título</label><input id="titulo">
+<label>Solicitante</label><input id="solicitante">
+<label>Centro de Custo</label><input id="cc">
+<label>Unidade</label><input id="unidade">
+<label>Departamento</label><input id="departamento">
+<label>Contato</label><input id="contato">
+<label>Email</label><input id="email">
+<label>Previsão</label><input id="previsao">
+<label>Descrição</label><textarea id="descricao"></textarea>
+<label>Equipamento</label><input id="equipamento">
 
-            // Usa a API URL.createObjectURL para criar um link para o Blob
-            const url = URL.createObjectURL(blob);
+<button id="salvarBtn" onclick="salvarChamado()">Salvar Chamado</button>
+<button id="Gerar" onclick="gerarTXT()">Gerar TXT</button>
 
-            // Cria um elemento <a> dinamicamente para iniciar o download
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${tituloArquivo || 'dados_formulario'}.txt`; // Define o nome do arquivo com o título e extensão .txt
-            
-            // Simula um clique no link para iniciar o download
-            document.body.appendChild(link);
-            link.click();
+</div>
 
-            // Limpa o objeto URL revogado e remove o link
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
 
-            alert('Arquivo gerado e download iniciado!');
-        });
-    </script>
+<!-- ===========================================================
+==================== 2) PÁGINA DE CHAMADOS SALVOS ===============
+=========================================================== -->
+<div id="chamadosPage">
+
+<h3>Chamados Salvos</h3>
+
+<table border="1" width="100%" style="border-collapse:collapse;">
+<thead>
+<tr>
+<th>Título</th>
+<th>Solicitante</th>
+<th>Depto</th>
+<th>Equipamento</th>
+</tr>
+</thead>
+<tbody id="listaChamados"></tbody>
+</table>
+
+</div>
+
+
+<!-- ===========================================================
+==================== 3) CONSULTA DE PATRIMÔNIO =================
+=========================================================== -->
+<div id="consultaPage">
+
+<div class="card">
+<h3>Importar planilha</h3>
+<input id="file" type="file" accept=".xlsx,.xls,.csv" />
+<div id="status" class="small">Nenhum arquivo carregado.</div>
+</div>
+
+<div class="card">
+<label for="patrimonio">Buscar Patrimônio</label>
+<input id="patrimonio" type="text" placeholder="Digite o patrimônio">
+<button id="buscarBtn" disabled>Buscar</button>
+
+<div style="display:flex;gap:8px;margin-top:6px">
+ <div style="flex:1"><label>Departamento</label><input id="depOut" readonly></div>
+ <div style="flex:1"><label>Serial</label><input id="serialOut" readonly></div>
+ <div style="flex:1"><label>Modelo</label><input id="modeloOut" readonly></div>
+</div>
+
+<div id="msg" class="small"></div>
+</div>
+
+<div class="card">
+<strong>Pré-visualização</strong>
+<div class="preview" id="previewArea">Nenhum dado.</div>
+</div>
+
+</div>
+
+
+<!-- ===========================================================
+========================= JAVASCRIPT ============================
+=========================================================== -->
+<script>
+let chamados=[];
+
+/* ---------- SALVAR CHAMADO ---------- */
+function salvarChamado(){
+ const c={
+  titulo: titulo.value,
+  solicitante: solicitante.value,
+  cc: cc.value,
+  unidade: unidade.value,
+  departamento: departamento.value,
+  contato: contato.value,
+  email: email.value,
+  previsao: previsao.value,
+  descricao: descricao.value,
+  equipamento: equipamento.value
+ };
+
+ chamados.push(c);
+ atualizarTabela();
+ alert("Chamado salvo!");
+}
+
+/* ---------- ATUALIZAR LISTA ---------- */
+function atualizarTabela(){
+ listaChamados.innerHTML = "";
+ chamados.forEach(c=>{
+  listaChamados.innerHTML += `
+   <tr>
+    <td>${c.titulo}</td>
+    <td>${c.solicitante}</td>
+    <td>${c.departamento}</td>
+    <td>${c.equipamento}</td>
+   </tr>`;
+ });
+}
+
+/* ---------- ABAS ---------- */
+function abrirChamados(){
+ formPage.style.display = "block";
+ consultaPage.style.display = "none";
+ chamadosPage.style.display = "none";
+}
+
+function abrirConsulta(){
+ formPage.style.display = "none";
+ consultaPage.style.display = "block";
+ chamadosPage.style.display = "none";
+}
+
+function abrirChamadosSalvos(){
+ formPage.style.display = "none";
+ consultaPage.style.display = "none";
+ chamadosPage.style.display = "block";
+}
+
+/* ---------- GERAR TXT ---------- */
+function gerarTXT(){
+ let texto =
+ `TITULO: ${titulo.value}
+SOLICITANTE: ${solicitante.value}
+CENTRO DE CUSTO: ${cc.value}
+UNIDADE: ${unidade.value}
+DEPARTAMENTO: ${departamento.value}
+CONTATO: ${contato.value}
+EMAIL: ${email.value}
+PREVISAO: ${previsao.value}
+DESCRICAO: ${descricao.value}
+EQUIPAMENTO: ${equipamento.value}`;
+
+ const blob = new Blob([texto], { type: "text/plain" });
+ const link = document.createElement("a");
+ link.href = URL.createObjectURL(blob);
+ link.download = "chamado.txt";
+ link.click();
+}
+</script>
 
 </body>
 </html>
